@@ -9,7 +9,7 @@ Dart JS interop for [Mermaid](https://github.com/mermaid-js/mermaid) - Javascrip
 
     ```yaml
     dependencies:
-      mermaid: ^0.1.0
+      mermaid: ^0.9.0
     ```
 
 2. Load the latest Mermaid source (js and css) in your html layout:
