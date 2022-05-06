@@ -59,10 +59,6 @@ void main() {
   MermaidApi.initialize(Config(
     securityLevel: SecurityLevel.Strict,
     theme: Theme.Forest,
-    /*      themeCSS: '''.node rect { fill: red; }
-        .edgePath .path {stroke: orange;} .arrowheadPath {fill: purple;}
-        
-        ''',*/
     logLevel: LogLevel.Error,
     startOnLoad: false,
     arrowMarkerAbsolute: true,
