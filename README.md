@@ -31,7 +31,7 @@ Dart JS interop for [Mermaid](https://github.com/mermaid-js/mermaid) - Javascrip
     const testMarkdownWithMermaid="""
     [Sequence Diagram](http://mermaid-js.github.io/mermaid/#/./sequenceDiagram)
     ------------------
-    `&#96;`mermaid
+    ``​`mermaid
     sequenceDiagram
         participant Alice
         participant Bob
@@ -43,7 +43,7 @@ Dart JS interop for [Mermaid](https://github.com/mermaid-js/mermaid) - Javascrip
         John-->>Alice: Great!
         John->>Bob: How about you?
         Bob-->>John: Jolly good!
-    `&#96;`
+    ``​`
     """;
 
     final nullSanitizer_SVGCantBeInsertedWithoutIt = NullTreeSanitizer();
