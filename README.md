@@ -3,13 +3,30 @@ Mermaid (Dart)
 
 Dart JS interop for [Mermaid](https://github.com/mermaid-js/mermaid) - Javascript library that makes use of a markdown based syntax to render customizable diagrams, charts and visualizations..
 
+The usage is very simple.  Mermaid diagrams are placed within 
+
+```
+``​`mermaid
+
+...diagram source...
+
+``​`
+```
+
+blocks within the markdown source.  The markdown is then converted to HTML using the `markdownToHtml()` method from the [Markdown](https://pub.dev/packages/markdown) package.  This html is placed within a div on the html page.  The Markdown package will create `<code></code>` elements with the class `'language-mermaid'` for each of the mermaid blocks within the original markdown source.
+Here is where the Mermaid package comes into play.  The Mermaid package is initialized with a call to `MermaidApi.initialize()`, the mermaid theme and other configurations options can be set in this call.
+The next step is to simply call `mermaidRender()` with one of the following - a W3C selector for the html elements containing mermaid source, a `List<Element>` of elements containing mermaid source, or a single html `Element` containing mermaid diagram source.
+
+There are other ways to invoke the conversion that the example [`app.dart`](https://github.com/timmaffett/mermaid.dart/blob/master/example/app.dart) illustrates.  These include methods that return the SVG code directly.  
+Note that the Mermaid javascript library requires a browser dom to create the SVG, so it is not possible to create SVG from Mermaid diagram source outside of the browser environment (ie. server side), although it may be possible using something like [JSDom](https://www.npmjs.com/package/jsdom) or [puppeteer](https://github.com/puppeteer/puppeteer) that allows dom use by javascript on the server.  Such a server side project remains outside the scope of Mermaid.dart.
+
 ## Usage
 
 1. Register the Dart package in your `pubspec.yaml`:
 
     ```yaml
     dependencies:
-      mermaid: ^0.9.0
+      mermaid: ^0.9.1
     ```
 
 2. Load the latest Mermaid source (js and css) in your html layout:
