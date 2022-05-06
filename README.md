@@ -3,6 +3,8 @@ Mermaid (Dart)
 
 Dart JS interop for [Mermaid](https://github.com/mermaid-js/mermaid) - Javascript library that makes use of a markdown based syntax to render customizable diagrams, charts and visualizations..
 
+Live example of [Markdown Live Editor with Mermaid support](https://timmaffett.github.io/markdown_mermaid/) can be found [here](https://timmaffett.github.io/markdown_mermaid/).
+
 The usage is very simple.  Mermaid diagrams are placed within 
 
 ```
@@ -26,7 +28,7 @@ Note that the Mermaid javascript library requires a browser dom to create the SV
 
     ```yaml
     dependencies:
-      mermaid: ^0.9.2
+      mermaid: ^0.9.3
     ```
 
 2. Load the latest Mermaid source (js and css) in your html layout:
