@@ -1,3 +1,5 @@
+## 0.9.35
+* Tidy up example code
 ## 0.9.3
 * Added link to live example to README.md
 ## 0.9.2
