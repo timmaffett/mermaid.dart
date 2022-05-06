@@ -1,3 +1,5 @@
+## 0.9.2
+* Change markdown dependency version to be '>=5.0.0' so '6.0.0-dev' can be used
 ## 0.9.1
 * Refine Readme.md and minor changes to app.dart example.
 ## 0.9.0

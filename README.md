@@ -26,7 +26,7 @@ Note that the Mermaid javascript library requires a browser dom to create the SV
 
     ```yaml
     dependencies:
-      mermaid: ^0.9.1
+      mermaid: ^0.9.2
     ```
 
 2. Load the latest Mermaid source (js and css) in your html layout:
