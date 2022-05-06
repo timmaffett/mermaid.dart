@@ -26,7 +26,6 @@ import 'package:js/js.dart';
 external void mermaidInitNative(
     Config? ingored, Object? selectorStringOrElementOrListOfElements);
 
-
 /// This wraps the native mermaid.init() with an additional call to
 /// mermaid.Initialize() so the Config parameter is honored.  (the native
 /// mermaid.init() always INGORES the configuration object, which
@@ -38,10 +37,10 @@ external void mermaidInitNative(
 /// or an List<Element>
 void mermaidInit(
     Config? configObject, Object? selectorStringOrElementOrListOfElements) {
-  if(configObject!=null) {
+  if (configObject != null) {
     mermaidInitialize(configObject);
   }
-  mermaidInitNative(null,selectorStringOrElementOrListOfElements);
+  mermaidInitNative(null, selectorStringOrElementOrListOfElements);
 }
 
 /// Our wrapper function that calls JS mermaid.init() and can be used to
@@ -134,7 +133,7 @@ external Config mermaidReset();
 /// conventions).
 /// In some cases we do not call the underlying mermaidAPI version but instead
 /// we call the mermaid version because of inconsistencies in mermaid 9.0.1
-/// mermaidAPI object code and behavior. 
+/// mermaidAPI object code and behavior.
 class MermaidApi {
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -271,6 +270,8 @@ class LogLevel {
 @JS()
 @anonymous
 abstract class FlowChartConfig {
+  external factory FlowChartConfig({bool htmlLabels, String curve});
+
   /// [htmlLabels] - Flag for setting whether or not a html tag should be used for rendering labels
   /// on the edges
   /// default: true
@@ -280,12 +281,25 @@ abstract class FlowChartConfig {
   /// default: 'linear'
   external String get curve;
   external set curve(String v);
-  external factory FlowChartConfig({bool htmlLabels, String curve});
 }
 
 @JS()
 @anonymous
 abstract class SequenceDiagramConfig {
+  external factory SequenceDiagramConfig(
+      {num diagramMarginX,
+      num diagramMarginY,
+      num actorMargin,
+      num width,
+      num height,
+      num boxMargin,
+      num boxTextMargin,
+      num noteMargin,
+      num messageMargin,
+      bool mirrorActors,
+      num bottomMarginAdj,
+      bool useMaxWidth});
+
   /// [diagramMarginX] - margin to the right and left of the sequence diagram
   /// default: 50
   external num get diagramMarginX;
@@ -347,24 +361,23 @@ abstract class SequenceDiagramConfig {
   /// default: true
   external bool get useMaxWidth;
   external set useMaxWidth(bool v);
-  external factory SequenceDiagramConfig(
-      {num diagramMarginX,
-      num diagramMarginY,
-      num actorMargin,
-      num width,
-      num height,
-      num boxMargin,
-      num boxTextMargin,
-      num noteMargin,
-      num messageMargin,
-      bool mirrorActors,
-      num bottomMarginAdj,
-      bool useMaxWidth});
 }
 
 @JS()
 @anonymous
 abstract class GnattConfig {
+  external factory GnattConfig(
+      {num titleTopMargin,
+      num barHeight,
+      num barGap,
+      num topPadding,
+      num leftPadding,
+      num gridLineStartPadding,
+      num fontSize,
+      String fontFamily,
+      num numberSectionStyles,
+      String axisFormat});
+
   /// [titleTopMargin] - margin top for the text over the gantt diagram
   /// default: 25
   external num get titleTopMargin;
@@ -414,22 +427,23 @@ abstract class GnattConfig {
   /// default: '%Y-%m-%d'
   external String get axisFormat;
   external set axisFormat(String v);
-  external factory GnattConfig(
-      {num titleTopMargin,
-      num barHeight,
-      num barGap,
-      num topPadding,
-      num leftPadding,
-      num gridLineStartPadding,
-      num fontSize,
-      String fontFamily,
-      num numberSectionStyles,
-      String axisFormat});
 }
 
 @JS()
 @anonymous
 abstract class Config {
+  external factory Config(
+      {String securityLevel,
+      String? theme,
+      String themeCSS,
+      num logLevel,
+      bool startOnLoad,
+      bool arrowMarkerAbsolute,
+      FlowChartConfig flowchart,
+      SequenceDiagramConfig sequence,
+      GnattConfig gnatt,
+      dynamic git});
+
   /// Disallow/allow potentially dangerous cross-site scripting behavior.
   /// See [SecurityLevel] class for possible values.
   /// default: [SecurityLevel.Strict]
@@ -566,22 +580,14 @@ startOnLoad:${c.startOnLoad},
 arrowMarkerAbsolute:${c.arrowMarkerAbsolute},
 ''';
   }
-
-  external factory Config(
-      {String securityLevel,
-      String? theme,
-      String themeCSS,
-      num logLevel,
-      bool startOnLoad,
-      bool arrowMarkerAbsolute,
-      FlowChartConfig flowchart,
-      SequenceDiagramConfig sequence,
-      GnattConfig gnatt,
-      dynamic git});
 }
 
 /*
 TIM JAVASCRIPT for dark theme in mermaid
+
+Misc other notes and code taken from Mermaid.js for building this file
+
+TODO: @timmaffett Clean up this code make sure it is all incorporated or removed.
 
 
 import { invert, lighten, darken, rgba, adjust } from 'khroma';

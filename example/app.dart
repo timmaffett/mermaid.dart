@@ -18,7 +18,7 @@ final versionSpan = querySelector('.version') as SpanElement;
 
 final nullSanitizer = NullTreeSanitizer();
 const typing = Duration(milliseconds: 15 /*150*/);
-final introText = '''Markdown is the **best**!
+const introText = '''Markdown is the **best**!
 
 * It has lists.
 * It has [links](https://dart.dev).
@@ -42,14 +42,15 @@ final mrAllRadio = querySelector('#mr-all-radio') as HtmlElement;
 final marLoopRadio = querySelector('#mar-loop-radio') as HtmlElement;
 final mInitAllRadio = querySelector('#m-init-all-radio') as HtmlElement;
 
-final possibleMermaidThemes  = [
+final possibleMermaidThemes = [
   Theme.Base,
   Theme.Forest,
   Theme.Dark,
   Theme.Default,
   Theme.Neutral
 ];
-int nextMInitAllTheme = 1; // start with 'Forest' first time m-init-all-radio radio button is chosen 
+int nextMInitAllTheme =
+    1; // start with 'Forest' first time m-init-all-radio radio button is chosen
 
 String mermaidRenderMethod = 'mr-all-radio';
 
@@ -106,25 +107,11 @@ void main() {
   marLoopRadio.onClick.listen(_switchMermaidRenderMethod);
   mInitAllRadio.onClick.listen(_switchMermaidRenderMethod);
 
-  /*
-    for(String key in samples.keys) {
-      final code=samples[key];
-      document.append(htmlDiv:Element());
-    }
-  */
   try {
-    Config conf = mermaidApiGetConfig();
-    window.console.log('Conf is ${(conf == null) ? "null" : "not null"}');
-    window.console.log("Mermaid config conf.theme=${conf.theme}");
+    final Config conf = MermaidApi.getConfig();
+    window.console.log("Mermaid.getConfig Config.theme=${conf.theme}");
   } catch (e) {
-    window.console.log('Dart on conf caught ex $e');
-  }
-  try {
-    Config conf2 = MermaidApi.getConfig();
-    window.console.log('Conf2 is ${(conf2 == null) ? "null" : "not null"}');
-    window.console.log("Mermaid.getConfig conf2.theme=${conf2.theme}");
-  } catch (e) {
-    window.console.log('Dart on conf2 caught ex $e');
+    window.console.log('During MermaidApi.getConfig() Exception caught ex $e');
   }
 }
 
@@ -156,7 +143,8 @@ void _renderMarkdown([Event? event]) {
         highlightElement(block);
       }
     } catch (e) {
-      window.console.error('Error mermaidRender() while looping over code blocks:');
+      window.console
+          .error('Error mermaidRender() while looping over code blocks:');
       window.console.error(e);
     }
   }
@@ -176,9 +164,11 @@ void _renderMarkdown([Event? event]) {
   if (mermaidRenderMethod == 'mar-loop-radio') {
     for (final block in htmlDiv.querySelectorAll('code.language-mermaid')) {
       try {
+        /* //NOT UNTIL MY PR IS IN MERMAID release (post 9.0.1 sometime)
         void parseError(String error, String hash) {
-          window.console.log('Mermaid parseError callback error="$error" hash="$hash"');
-        }
+          window.console
+              .log('Mermaid parseError callback error="$error" hash="$hash"');
+        }*/
         //NOT UNTIL MY PR IS IN MERMAID release (post 9.0.1 sometime)//MermaidApi.parseError = parseError;
 
         void setSvgWithElementBinding(String svg,
@@ -212,10 +202,11 @@ void _renderMarkdown([Event? event]) {
 //OK        var finalSvg = MermaidApi.render(null,diagramDef,hereIsSvg,document.querySelector('#mermaidWork'));
 //OK        final finalSvg = MermaidApi.render('',diagramDef,hereIsSvg);
 //OK        final finalSvg = MermaidApi.render('SCRATCH${uniqueMermaidNum++}', diagramDef, hereIsSvg);
-        final svg = MermaidApi.render(null,diagramDef,setSvgWithElementBinding);
+        final svg =
+            MermaidApi.render(null, diagramDef, setSvgWithElementBinding);
 
-        window.console.log(
-            'SVG Len=${svg.length}  :  ${svg.substring(0, 80)} ......  ');
+        window.console
+            .log('SVG Len=${svg.length}  :  ${svg.substring(0, 80)} ......  ');
         /* ALTERNATELY to using [setSvgWithElementBinding] we could just do this:
            (but we do not get event binding from mermaid without using the callback) 
         block.setInnerHtml(finalSvg, treeSanitizer: nullSanitizer);
@@ -229,16 +220,18 @@ void _renderMarkdown([Event? event]) {
 
   //  Just calling the init function over and over with config object and selector...
   if (mermaidRenderMethod == 'm-init-all-radio') {
-    if(htmlDiv.querySelector('code.language-mermaid')!=null) {
+    if (htmlDiv.querySelector('code.language-mermaid') != null) {
       try {
-        window.console.log("calling mermaidInit() with theme ${possibleMermaidThemes[nextMInitAllTheme]}");
+        window.console.log(
+            "calling mermaidInit() with theme ${possibleMermaidThemes[nextMInitAllTheme]}");
         mermaidInit(
-          Config(theme:possibleMermaidThemes[nextMInitAllTheme],
-                  securityLevel:SecurityLevel.Strict),
-        'code.language-mermaid');
-        nextMInitAllTheme++;// Advance through themes when doing this to illustrate changing themes
-        if(nextMInitAllTheme>=possibleMermaidThemes.length) {
-          nextMInitAllTheme=0;
+            Config(
+                theme: possibleMermaidThemes[nextMInitAllTheme],
+                securityLevel: SecurityLevel.Strict),
+            'code.language-mermaid');
+        nextMInitAllTheme++; // Advance through themes when doing this to illustrate changing themes
+        if (nextMInitAllTheme >= possibleMermaidThemes.length) {
+          nextMInitAllTheme = 0;
         }
       } catch (e) {
         window.console.error('Error thrown during mermaidInit():');
@@ -265,6 +258,7 @@ void _typeItOut(String msg, int pos) {
     markdownInput.value = msg.substring(0, pos);
     markdownInput.focus();
     _renderMarkdown();
+    // ignore: parameter_assignments
     pos++;
     timer = Timer(typing, addCharacter);
   }
@@ -320,7 +314,7 @@ void _switchMermaidRenderMethod(Event e) {
     mermaidRenderMethod = target.id;
 
     window.console.log('mermaidRenderMethod changed to `$mermaidRenderMethod`');
-  
+
     _renderMarkdown();
   }
 }
