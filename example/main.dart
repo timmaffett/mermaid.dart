@@ -2,10 +2,11 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:async';
-//import 'dart:convert';
+/// This example illustrates a NUMBER of different ways of invoking mermaid to 
+/// render the mermaid diagrams.
+/// There is a set of radio buttons provided to switch between the different methods.
+/// 
 import 'dart:html';
-//import 'dart:svg';
 
 import 'package:markdown/markdown.dart' as md;
 import 'package:mermaid/mermaid.dart';
@@ -17,12 +18,6 @@ final htmlDiv = querySelector('#html') as DivElement;
 final versionSpan = querySelector('.version') as SpanElement;
 
 final nullSanitizer = NullTreeSanitizer();
-const typing = Duration(milliseconds: 15 /*150*/);
-const introText = '''Markdown is the **best**!
-
-* It has lists.
-* It has [links](https://dart.dev).
-* It has _so much more_...''';
 
 // Flavor support.
 final basicRadio = querySelector('#basic-radio') as HtmlElement;
@@ -74,12 +69,12 @@ void main() {
 
   if (savedMarkdown != null &&
       savedMarkdown.isNotEmpty &&
-      savedMarkdown != introText) {
+      savedMarkdown != mermaidExample) {
     markdownInput.value = savedMarkdown;
     markdownInput.focus();
     _renderMarkdown();
   } else {
-    _typeItOut(mermaidExample /*introText*/, 82);
+    _addDefaultMarkdown(mermaidExample);
   }
 
   // GitHub is the default extension set.
@@ -192,12 +187,6 @@ void _renderMarkdown([Event? event]) {
         //window.console.log('parse(```$graphDef```) returned ${parseResult.toString()} for graph source');
 
         window.console.log('Calling to render diagram');
-//OK        var finalSvg = MermaidApi.render(null,diagramDef,hereIsSvg);//,document.querySelector('#mermaidWork'));
-//fail it black svgs        var finalSvg = MermaidApi.render('id',diagramDef,hereIsSvg);//,document.querySelector('#mermaidWork'));
-//fail with black svgs        var finalSvg = MermaidApi.render('id',diagramDef,hereIsSvg,document.querySelector('#mermaidWork'));
-//OK        var finalSvg = MermaidApi.render(null,diagramDef,hereIsSvg,document.querySelector('#mermaidWork'));
-//OK        final finalSvg = MermaidApi.render('',diagramDef,hereIsSvg);
-//OK        final finalSvg = MermaidApi.render('SCRATCH${uniqueMermaidNum++}', diagramDef, hereIsSvg);
         final svg =
             MermaidApi.render(null, diagramDef, setSvgWithElementBinding);
 
@@ -242,24 +231,10 @@ void _renderMarkdown([Event? event]) {
   }
 }
 
-void _typeItOut(String msg, int pos) {
-  late Timer timer;
-  markdownInput.onKeyUp.listen((_) {
-    timer.cancel();
-  });
-  void addCharacter() {
-    if (pos > msg.length) {
-      return;
-    }
-    markdownInput.value = msg.substring(0, pos);
-    markdownInput.focus();
-    _renderMarkdown();
-    // ignore: parameter_assignments
-    pos++;
-    timer = Timer(typing, addCharacter);
-  }
-
-  timer = Timer(typing, addCharacter);
+void _addDefaultMarkdown(String markdown) {
+  markdownInput.value = markdown;
+  markdownInput.focus();
+  _renderMarkdown();
 }
 
 void _switchFlavor(Event e) {
@@ -479,6 +454,7 @@ requirementDiagram
 ```
 """;
 
+// Not currently used
 const Map<String, String> samples = {
   'Flow Chart': '''graph TD
     A[Christmas] -->|Get money| B(Go shopping)
