@@ -1,5 +1,5 @@
 name: mermaid
-version: 0.9.0
+version: 0.9.1
 description: Dart JS interop for Mermaid - The Javascript tool that makes use of a markdown based syntax to render customizable diagrams, charts and visualizations.
 
 homepage: https://github.com/timmaffett/mermaid.dart
