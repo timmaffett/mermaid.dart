@@ -234,8 +234,7 @@ void _renderMarkdown([Event? event]) {
         window.console.log("calling mermaidInit() with theme ${possibleMermaidThemes[nextMInitAllTheme]}");
         mermaidInit(
           Config(theme:possibleMermaidThemes[nextMInitAllTheme],
-                  securityLevel:SecurityLevel.Strict,
-                  sequence:SequenceDiagramConfig(actorMargin:100),),
+                  securityLevel:SecurityLevel.Strict),
         'code.language-mermaid');
         nextMInitAllTheme++;// Advance through themes when doing this to illustrate changing themes
         if(nextMInitAllTheme>=possibleMermaidThemes.length) {
